@@ -71,9 +71,9 @@ class AnimeDetailViewModel @Inject constructor(
         }
     }
 
-    fun getLatestEpisodeUploadDateTime(): String = this.videoPlayerEpisodeItems.first().uploadDate
+    private fun getLatestEpisodeUploadDateTime(): String = this.videoPlayerEpisodeItems.first().uploadDate
 
-    fun getLatestEpisodeVideoType(): VideoType = this.videoPlayerEpisodeItems.first().videoType
+    private fun getLatestEpisodeVideoType(): VideoType = this.videoPlayerEpisodeItems.first().videoType
 
     private fun getLatestAnimeItem(): AnimeDataItem {
         return AnimeDataItem(

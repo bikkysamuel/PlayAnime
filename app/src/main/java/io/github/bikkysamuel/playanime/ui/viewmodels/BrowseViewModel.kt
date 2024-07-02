@@ -34,6 +34,7 @@ class BrowseViewModel @Inject constructor(
         private set
 
     var showSearchBar by mutableStateOf(false)
+        private set
 
     var dubOrSubButtonText by mutableStateOf("Sub")
         private set
@@ -54,7 +55,7 @@ class BrowseViewModel @Inject constructor(
         loadHome()
     }
 
-    fun resetSearchKeyword() {
+    private fun resetSearchKeyword() {
         this.searchKeyword = ""
         this.showEmptyScreenBeforeSearch = true
     }
@@ -62,10 +63,21 @@ class BrowseViewModel @Inject constructor(
     fun showDubVersion(dubVersionSelected: Boolean) {
         showDubVersions = dubVersionSelected
         setDubOrSubButtonText()
+        loadHomePage(resetData = true)
     }
 
     private fun setDubOrSubButtonText() {
         dubOrSubButtonText = if (showDubVersions) "Dub" else "Sub"
+    }
+
+    fun showSearchButtonClicked() {
+        showSearchBar = true
+    }
+
+    fun closeSearchButtonClicked() {
+        showSearchBar = false
+        resetSearchKeyword()
+        showDubVersion(false)
     }
 
     private fun loadHome() {

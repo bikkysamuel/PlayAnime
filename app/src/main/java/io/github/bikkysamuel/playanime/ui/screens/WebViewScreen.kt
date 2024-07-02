@@ -59,12 +59,12 @@ fun WebViewScreen(
                 }
 
                 scrollBarStyle = View.SCROLLBARS_INSIDE_OVERLAY
-                requestFocus(View.FOCUS_DOWN)
-                loadUrl("https:${animeVideoFrameUrl}")
+//                requestFocus(View.FOCUS_DOWN)
+//                loadUrl("https:${animeVideoFrameUrl}")
             }
         }, update = {
-//            val frameString = animeDetailViewModel.animeVideoFrameUrl
-//            it.loadDataWithBaseURL(null, frameString, "text/html", "utf-8", null)
+            val frameUrl = "https:${animeVideoFrameUrl}"
+            it.loadUrl(frameUrl)
         })
     }
 }

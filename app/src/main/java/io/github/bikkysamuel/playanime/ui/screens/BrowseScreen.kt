@@ -83,15 +83,12 @@ fun BrowseScreen(
 
                             // Close button for Search
                             Button(onClick = {
-                                viewModel.showSearchBar = false
                                 if (searchText.isNotEmpty()) {
                                     coroutineScope.launch {
                                         lazyGridState.scrollToItem(0)
                                     }
-                                    viewModel.resetSearchKeyword()
-                                    viewModel.showDubVersion(false)
-                                    viewModel.loadHomePage(resetData = true)
                                 }
+                                viewModel.closeSearchButtonClicked()
                             }) {
                                 Image(
                                     painter = painterResource(id = R.drawable.baseline_close_24),
@@ -108,7 +105,7 @@ fun BrowseScreen(
                             )
 
                             Button(onClick = {
-                                viewModel.showSearchBar = true
+                                viewModel.showSearchButtonClicked()
                             }) {
                                 Image(
                                     painter = painterResource(id = R.drawable.baseline_search_24),
@@ -116,16 +113,15 @@ fun BrowseScreen(
                                 )
                             }
 
-                            Button(
+                            SubDubToggleButton(
+                                text = viewModel.dubOrSubButtonText,
                                 onClick = {
                                     coroutineScope.launch {
                                         lazyGridState.scrollToItem(0)
                                     }
                                     viewModel.showDubVersion(!viewModel.showDubVersions)
-                                    viewModel.loadHomePage(resetData = true)
-                                }) {
-                                Text(text = viewModel.dubOrSubButtonText)
-                            }
+                                }
+                            )
                         }
                     }
 
@@ -159,5 +155,21 @@ fun BrowseTitle(modifier: Modifier = Modifier) {
             text = BottomBarScreen.Browse.title,
             fontSize = 18.sp
         )
+    }
+}
+
+@Composable
+fun SubDubToggleButton(
+    text: String,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Button(
+        modifier = modifier,
+        onClick = {
+            onClick()
+        }
+    ) {
+        Text(text = text)
     }
 }
