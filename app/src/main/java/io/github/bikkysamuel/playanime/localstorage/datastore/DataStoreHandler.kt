@@ -2,6 +2,7 @@ package io.github.bikkysamuel.playanime.localstorage.datastore
 
 import android.content.Context
 import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
@@ -29,6 +30,17 @@ class DataStoreHandler @Inject constructor(
     private suspend fun <T> loadPreferencesData(preferencesKey: Preferences.Key<T>): T? {
         val preferences = context.dataStore.data.first()
         return preferences[preferencesKey]
+    }
+
+    // Boolean
+    private suspend fun saveBooleanData(key: String, value: Boolean) {
+        val dataStoreKey = booleanPreferencesKey(key)
+        savePreferencesData(dataStoreKey, value)
+    }
+
+    private suspend fun loadBooleanData(key: String): Boolean? {
+        val dataStoreKey = booleanPreferencesKey(key)
+        return loadPreferencesData(dataStoreKey)
     }
 
     // String
@@ -59,4 +71,16 @@ class DataStoreHandler @Inject constructor(
     suspend fun loadSelectedFontStyleInDataStore(): String? {
         return loadStringData(Constants.DATASTORE_SELECTED_FONT_STYLE)
     }
+
+    // Disclaimer values
+
+    // Font Style
+    suspend fun updateDisclaimerValue(accepted: Boolean) {
+        saveBooleanData(Constants.DATASTORE_DISCLAIMER_ACCEPTED, accepted)
+    }
+
+    suspend fun loadDisclaimerAcceptedValue(): Boolean {
+        return loadBooleanData(Constants.DATASTORE_DISCLAIMER_ACCEPTED)?: false
+    }
+
 }

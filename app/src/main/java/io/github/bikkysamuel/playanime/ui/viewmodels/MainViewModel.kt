@@ -47,6 +47,8 @@ class MainViewModel @Inject constructor(
     var appFontStyle by mutableStateOf(FontStyleSet.SYSTEM_DEFAULT)
         private set
 
+    var appDisclaimerAccepted by mutableStateOf(true)
+
     enum class ThemeSet {
         SYSTEM_DEFAULT, DARK, LIGHT, ORANGE_DARK, ORANGE_LIGHT
     }
@@ -58,6 +60,7 @@ class MainViewModel @Inject constructor(
     init {
         loadAppTheme()
         loadFontStyle()
+        loadDisclaimerAcceptedValue()
     }
 
     // START - App Theme and Settings
@@ -88,6 +91,22 @@ class MainViewModel @Inject constructor(
     }
 
     // END - Load App Settings
+
+    // START - DISCLAIMER
+
+    fun updateDisclaimerAcceptedValue() {
+        viewModelScope.launch {
+            dataStoreHandler.updateDisclaimerValue(true)
+        }
+    }
+
+    private fun loadDisclaimerAcceptedValue() {
+        viewModelScope.launch {
+            appDisclaimerAccepted = dataStoreHandler.loadDisclaimerAcceptedValue()
+        }
+    }
+
+    // END - DISCLAIMER
 
     // START - App Theme
 
